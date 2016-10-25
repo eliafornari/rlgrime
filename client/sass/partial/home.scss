@@ -1,0 +1,234 @@
+.home{
+  position: relative;
+  margin:0;
+  display: block;
+  width:100vw;
+  height: 100vh;
+  background-image: url('/assets/images/background-texture-optimized.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.home-content{
+  position: relative;
+  width:100vw;
+  height: 100vh;
+}
+
+
+.home-block{
+  position: absolute;
+  height:30vw;
+  width:25vh;
+  img{
+    position: absolute;
+  }
+
+}
+
+
+
+
+
+//................................TOP................................
+
+//left up
+#left-top{
+  left:50px;
+  height:22vh;
+  width:30vw;
+  #waiting{
+    left:0;
+    width:50%;
+  }
+
+  #joys{
+    left:40%;
+    height:100%;
+    width:auto;
+  }
+}
+
+
+
+//center up
+#center-top{
+  left:50%;
+  width:22vw;
+  margin-left:-11vw;
+  height:20vw;
+  #fed-up{
+    width: 100%;
+    display: block;
+    margin: auto;
+    position: relative;
+
+  }
+}
+
+
+//center up
+#right-top{
+  right:$margin-sides;
+  width:28vw;
+  #eight-wonder{
+    width:100%;
+  }
+
+}
+
+
+//................................CENTER................................
+#left-center{
+  left:7vw;
+  width:30vw;
+  top:20vh;
+  #rl-grime{
+    position: relative;
+    width:90%;
+    margin: auto;
+  }
+}
+
+#center-center{
+  left:50%;
+  width:28vw;
+  margin-left: -14vw;
+  top:20vh;
+  #wsn{
+    position: relative;
+    width:90%;
+    margin: auto;
+  }
+}
+
+#right-center{
+  width:30vw;
+  right:$margin-sides;
+  top:25vh;
+  #skrillex{
+    position: relative;
+    width:90%;
+    margin: auto;
+  }
+
+}
+
+
+
+
+
+
+//................................BOTTOM................................
+
+
+#left-bottom{
+  left:50px;
+  width:50vw;
+  bottom:0;
+  #star{
+    width:10%;
+    left:0;
+    top:0;
+  }
+  #layinggirl{
+    width:88%;
+    left:0;
+    top:2vh;
+  }
+  #newnewnew{
+    width:15vw;
+    top: 0vh;
+    left:13vw;
+  }
+  #w8ingcom{
+    width:17vw;
+    top:12vh;
+    left:16vw;
+    @include transform-element(rotate(-10deg));
+
+  }
+  #pickyourpleasure{
+    width:13vw;
+    right:5vw;
+    top:0;
+
+  }
+  #phone{
+    width:15vw;
+    top:10vh;
+    right:-3vw;
+
+  }
+  #nopainnogain{
+    width:15vw;
+    bottom:0;
+    left:0;
+
+  }
+  #transformedtoperfection{
+    width:30vw;
+    right:0;
+    bottom:2vh;
+
+  }
+}
+
+
+
+#center-bottom{
+  left:calc(50vw + 100px);
+  bottom:0;
+  width:20vw;
+  #topmarks{
+    top:0;
+    left:-5vw;
+    width:100%;
+
+  }
+  #superclimax{
+    top:12vh;
+    width:90%;
+    left:0;
+
+  }
+  #intimatepleasure{
+    bottom:0;
+    left:-2vw;
+    width:100%;
+
+  }
+}
+
+
+#right-bottom{
+  bottom:0;
+  right:$margin-sides;
+  width:20vw;
+  height:40vh;
+  #w8ingcom_right{
+    width:100%;
+    top:0;
+
+  }
+  #callgirl{
+    width:100%;
+    bottom:2vh;
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

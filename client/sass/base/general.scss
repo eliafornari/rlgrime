@@ -1,0 +1,259 @@
+/*....................................General settings..................................*/
+
+
+
+
+/*.....................TEXT MARK STYLES......................*/
+
+::-moz-selection {
+    background: transparent;
+    text-shadow: none;
+}
+
+
+::selection {
+    background: transparent;
+    text-shadow: none;
+}
+
+
+
+a:active{
+
+}
+
+.ng-click-active{
+
+}
+
+
+/*.....................ACTIVE CLASSES......................*/
+
+.active{
+  opacity:0.1;
+}
+
+
+
+
+
+/*....................HIDING SCROLLBAR.....................*/
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+
+*{
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
+
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+
+
+/*.....................GENERAL STYLES......................*/
+
+html{
+  font-family: helvetica;
+  width: 100%;
+  margin: 0, 0;
+  padding: 0, 0;
+  box-sizing: border-box;
+  background-color: #f9fcfb;
+}
+
+
+body {
+  width: 100vw;
+  height: 100%;
+  margin: 0, 0;
+  padding: 0, 0;
+  display: block;
+  position: relative;
+
+}
+
+
+p, a, li {
+  font-size: $font-size-p;
+  list-style-type: none;
+  letter-spacing:$letter-spacing;
+  color: #000000;
+  font-family: helvetica;
+}
+
+
+input, textarea, select, a, li {
+  text-decoration: none;
+}
+
+
+
+a{
+  cursor:pointer;
+  @include h2();
+  text-transform: uppercase;
+
+}
+
+p{
+  @include paragraph();
+}
+
+h1{
+  @include h1();
+}
+
+h2{
+  @include h2();
+}
+
+
+
+
+
+/*.........................MAIN............................*/
+main {
+  width:100vw;
+  position: relative;
+  display: block;
+  list-style-type: none;
+  display: block;
+}
+
+
+.logo{
+  position: fixed;
+  width:150px;
+  left:$margin-sides;
+  top:50%;
+  height:50px;
+  margin-top: -25px;
+  z-index: $z-logo;
+  @include respond-to(phone){
+    width:100px;
+    height:90px;
+    margin-top: 0;
+    bottom:0;
+    top:auto;
+  }
+  .logo-a{
+    height:100%;
+    position: absolute;
+    line-height: 50px;
+    top:0;
+    color:$black;
+    @include h2();
+    @include respond-to(phone){
+      height:90px;
+      line-height: 90px;
+    }
+  }
+  .logo-block{
+    display: block;
+    position: absolute;
+    height:40px;
+    width:100%;
+    bottom:0;
+    background-color: transparent;
+    @include respond-to(phone){
+      height:90px;
+    }
+    img{
+      width:150px;
+      height:auto;
+    }
+
+
+  }
+}
+
+
+.link{
+  position: fixed;
+  top:50%;
+  margin-top: -25px;
+  right:$margin-sides;
+  width: 100px;
+  display: block;
+  height: 50px;
+  @include h2();
+  @include respond-to(phone){
+    width:100px;
+    height:100px;
+    margin-top: 0;
+    bottom:0;
+    top:auto;
+    right:0;
+  }
+
+
+  img{
+    width:100%;
+    display: block;
+  }
+}
+
+
+table{
+  width: 100vw;
+  height: 100vh;
+  tr{
+    td{
+      vertical-align: middle;
+    }
+  }
+}
+
+
+
+
+
+.nav{
+  position: fixed;
+  width:auto;
+  left:50px;
+  top:$margin-sides;
+  z-index:$z-nav;
+  margin-top: -7px;
+  .nav-list{
+    display: inline-block;
+    a{
+      @include paragraph();
+      font-family: helvetica;
+      @include hover-effect-color(#FFFFFF,#1a1a1a);
+      display: block;
+      height:$line-height-p;
+    }
+  }
+
+}
+
+
+
+
+
+/*.............................NG-CLOAK............................*/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+  cursor: pointer;
+}

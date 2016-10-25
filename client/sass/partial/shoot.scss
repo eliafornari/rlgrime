@@ -1,0 +1,32 @@
+.shoot{
+  position: relative;
+  margin:0;
+  display: block;
+  width:100vw;
+}
+
+
+.shoot-collection{
+  width:100%;
+  .shoot-collection-ul{
+    display: block;
+    width:100%;
+    margin:auto;
+    .shoot-collection-li{
+      display: block;
+      clear: both;
+      width:100%;
+      // margin-bottom: 100px;
+      &:nth-child(1){
+        // margin-top:100px;
+      }
+      .shoot-collection-img{
+        display: block;
+        width:100%;
+        margin:auto;
+
+
+      }
+    }
+  }
+}
