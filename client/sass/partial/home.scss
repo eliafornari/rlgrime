@@ -29,22 +29,36 @@
 
 
 
+.home-phonenumber{
+  position: fixed;
+  top:45%;
+  left:40%;
+  width: 40vw;
+  opacity: 0;
+  z-index:999;
+  a{
+    height:100%;
+    display: block;
+  }
+}
+
 
 
 //................................TOP................................
 
 //left up
 #left-top{
-  left:50px;
-  height:22vh;
-  width:30vw;
+  left: 0px;
+  height: 41vh;
+  width: 34vw;
   #waiting{
     left:0;
-    width:50%;
+    bottom:-1vh;
+    height:100%;
   }
 
   #joys{
-    left:40%;
+    right:0%;
     height:100%;
     width:auto;
   }
@@ -54,10 +68,10 @@
 
 //center up
 #center-top{
-  left:50%;
-  width:22vw;
-  margin-left:-11vw;
-  height:20vw;
+  left:37vw;
+  width:33vw;
+  margin-left:0;
+  height:45vh;
   #fed-up{
     width: 100%;
     display: block;
@@ -70,8 +84,10 @@
 
 //center up
 #right-top{
-  right:$margin-sides;
-  width:28vw;
+  top:3vh;
+  right:0;
+  width:34vw;
+  height: 45vh;
   #eight-wonder{
     width:100%;
   }
@@ -124,8 +140,9 @@
 
 
 #left-bottom{
-  left:50px;
-  width:50vw;
+  left:0px;
+  width:60vw;
+  height:55vh;
   bottom:0;
   #star{
     width:10%;
@@ -138,39 +155,36 @@
     top:2vh;
   }
   #newnewnew{
-    width:15vw;
+    width: 20vw;
     top: 0vh;
-    left:13vw;
+    left: 13vw;
   }
   #w8ingcom{
-    width:17vw;
-    top:12vh;
-    left:16vw;
-    @include transform-element(rotate(-10deg));
-
+    width: 17vw;
+    top: 11vh;
+    left: 19vw;
   }
   #pickyourpleasure{
-    width:13vw;
-    right:5vw;
-    top:0;
+    width: 18vw;
+    right: 7vw;
+    top: -7vh;
 
   }
   #phone{
-    width:15vw;
-    top:10vh;
-    right:-3vw;
-
+    width: 18vw;
+    top: 5vh;
+    right: 5vw;
   }
   #nopainnogain{
-    width:15vw;
-    bottom:0;
+    width:20vw;
+    bottom:2vh;
     left:0;
 
   }
   #transformedtoperfection{
-    width:30vw;
-    right:0;
-    bottom:2vh;
+    width: 37vw;
+    right: 3vw;
+    bottom: 4vh;
 
   }
 }
@@ -178,43 +192,44 @@
 
 
 #center-bottom{
-  left:calc(50vw + 100px);
+  left:calc(60vw);
   bottom:0;
   width:20vw;
+  height:55vh;
   #topmarks{
-    top:0;
-    left:-5vw;
-    width:100%;
-
+    top: -14vh;
+    left: -7vw;
+    width: 130%;
   }
   #superclimax{
-    top:12vh;
-    width:90%;
-    left:0;
+    top: 8vh;
+    width: 106%;
+    left: -2vw;
 
   }
   #intimatepleasure{
-    bottom:0;
-    left:-2vw;
-    width:100%;
-
+    bottom: 5vh;
+    left: -4vw;
+    width: 109%;
   }
 }
 
 
 #right-bottom{
-  bottom:0;
-  right:$margin-sides;
-  width:20vw;
-  height:40vh;
+  bottom: 0;
+  right: 8px;
+  width: 22vw;
+  height: 55vh;
   #w8ingcom_right{
-    width:100%;
-    top:0;
+    width:90%;
+    top:-5vh;
+    right:0;
+    @include transform-element(rotate(10deg));
 
   }
   #callgirl{
     width:100%;
-    bottom:2vh;
+    bottom:7vh;
 
   }
 }

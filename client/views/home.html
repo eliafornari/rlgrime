@@ -4,29 +4,37 @@
   <div class="home-content">
 
 
-<!-- up -->
 
-    <div class="home-block" id="left-top">
-      <img src="/assets/images/waitings.png" alt="waiting" id="waiting"/>
-      <img src="/assets/images/joys.png" alt="joys" id="joys"/>
+
+    <div class="home-phonenumber" style="opacity: {{phoneOpacity}}">
+      <a href="callto:18554647348">
+        <img src="/assets/images/phonenumber.png" alt="phone number" />
+      </a>
     </div>
 
 
+<!-- up -->
+
+    <div class="home-block" id="left-top" >
+      <img src="/assets/images/waitings.png" alt="waiting" id="waiting" style="left: -{{scrollPercent}}vw"/>
+      <img src="/assets/images/joys.png" alt="joys" id="joys" style="top: -{{scrollPercent}}vh"/>
+    </div>
+
 
     <div class="home-block" id="center-top">
-      <img src="/assets/images/fed-up.png" alt="fed up" id="fed-up"/>
+      <img src="/assets/images/fed-up.png" alt="fed up" id="fed-up" style="left: -{{scrollPercent}}vw"/>
     </div>
 
 
     <div class="home-block" id="right-top">
-      <img src="/assets/images/eigth-wonder.png" alt="eight wonder" id="eight-wonder"/>
+      <img src="/assets/images/eigth-wonder.png" alt="eight wonder" id="eight-wonder" style="top: -{{scrollPercent}}vw"/>
     </div>
 
 
 
 <!-- middle -->
 
-<div class="home-block" id="left-center">
+<!-- <div class="home-block" id="left-center">
   <img src="/assets/images/polaroid-rlgrime.png" alt="rl grime" id="rl-grime"/>
 </div>
 
@@ -36,35 +44,36 @@
 
 <div class="home-block" id="right-center">
   <img src="/assets/images/polaroid-skrillex.png" alt="skrillex" id="skrillex"/>
-</div>
+</div> -->
 
 
 <!-- bottom -->
 
 
 <div class="home-block" id="left-bottom">
-  <img src="/assets/images/star.png" alt="star" id="star"/>
+  <img src="/assets/images/star.png" alt="star" id="star" style="opacity: {{invertedOpacity}};"/>
 
-  <img src="/assets/images/laying-girl.png" alt="girl laying" id="layinggirl"/>
-  <img src="/assets/images/newnewnew.png" alt="newnewnew" id="newnewnew"/>
-  <img src="/assets/images/w8ingcom.png" alt="w8ingcom" id="w8ingcom"/>
+  <img src="/assets/images/laying-girl.png" alt="girl laying" id="layinggirl" style="left: -{{scrollPercent}}vw"/>
+  <img src="/assets/images/newnewnew.png" alt="newnewnew" id="newnewnew" style="transform: translateX(-{{scrollPercent}}vw);"/>
+  <img src="/assets/images/w8ingcom.png" alt="w8ingcom" id="w8ingcom" style="opacity: {{invertedOpacity}};"/>
 
-  <img src="/assets/images/pickyourpleasure.png" alt="pick your pleasure" id="pickyourpleasure"/>
-  <img src="/assets/images/phone.png" alt="phone" id="phone"/>
-  <img src="/assets/images/nopain-nogain.png" alt="nopain-nogain" id="nopainnogain"/>
-  <img src="/assets/images/transformedtoperfection.png" alt="transformed to perfection" id="transformedtoperfection"/>
+  <img src="/assets/images/pickyourpleasure.png" alt="pick your pleasure" id="pickyourpleasure" style="transform: translateY(-{{scrollPercent}}vh);"/>
+  <img src="/assets/images/phone.png" alt="phone" id="phone" style="transform: rotate({{rotatePhone}}deg); top: -{{movePhone}}vw; right: {{movePhoneLeft}}vw;"/>
+  <img src="/assets/images/nopain-nogain.png" alt="nopain-nogain" id="nopainnogain" style="bottom: -{{noPainNoGain}}vh"/>
+  <img src="/assets/images/transformedtoperfection.png" alt="transformed to perfection" id="transformedtoperfection" style="transform: translateY({{transformedToPerf}}vh)"/>
 </div>
 
  <div class="home-block" id="center-bottom">
-  <img src="/assets/images/topmarks.png" alt="top marks" id="topmarks"/>
-  <img src="/assets/images/super-climax.png" alt="super climax" id="superclimax"/>
-  <img src="/assets/images/intimate-pleasure.png" alt="intimate pleasure" id="intimatepleasure"/>
+  <img src="/assets/images/topmarks.png" alt="top marks" id="topmarks" style="transform: translateX(-{{scrollPercent}}vw);"/>
+  <img src="/assets/images/super-climax.png" alt="super climax" id="superclimax" style="transform: translateY({{scrollPercent}}vh)"/>
+  <img src="/assets/images/intimate-pleasure.png" alt="intimate pleasure" id="intimatepleasure" style="transform: translateY({{intimatePleasure}}vh)"/>
+
 
 </div>
 
 <div class="home-block" id="right-bottom">
-  <img src="/assets/images/w8ingcom.png" alt="w8ingcom" id="w8ingcom_right"/>
-  <img src="/assets/images/callgirl.png" alt="callgirl" id="callgirl"/>
+  <img src="/assets/images/w8ingcom.png" alt="w8ingcom" id="w8ingcom_right" style="left: {{scrollPercent}}vw"/>
+  <img src="/assets/images/callgirl.png" alt="callgirl" id="callgirl" style="right: -{{scrollPercent}}vw"/>
 
 </div>
 

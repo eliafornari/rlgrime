@@ -204,16 +204,97 @@ _angular2.default.module('myApp', ["ngRoute", "ngAnimate", "ngResource"]).run(['
     };
 });
 
-// var jquerymousewheel = require('./vendor/jquery.mousewheel.js')($);
+var jquerymousewheel = require('./vendor/jquery.mousewheel.js')($);
 var jqueryUI = require('./vendor/jquery-ui.min.js');
 var service = require("./service.js");
 var service = require("./home.js");
 var shoot = require("./shoot.js");
 
-},{"./home.js":2,"./service.js":3,"./shoot.js":4,"./vendor/jquery-ui.min.js":5,"angular":13,"angular-animate":7,"angular-resource":9,"angular-route":11,"jquery":26,"prismic.io":34}],2:[function(require,module,exports){
+},{"./home.js":2,"./service.js":3,"./shoot.js":4,"./vendor/jquery-ui.min.js":5,"./vendor/jquery.mousewheel.js":6,"angular":14,"angular-animate":8,"angular-resource":10,"angular-route":12,"jquery":27,"prismic.io":35}],2:[function(require,module,exports){
 'use strict';
 
-angular.module('myApp').controller('homeCtrl', function ($rootScope, $location, $window, $timeout, $http, anchorSmoothScroll, $scope, $anchorScroll, $interval, check, transformRequestAsFormPost) {});
+angular.module('myApp').controller('homeCtrl', function ($rootScope, $location, $window, $timeout, $http, anchorSmoothScroll, $scope, $anchorScroll, $interval, check, transformRequestAsFormPost) {
+
+  $rootScope.Scroll = 0;
+  $rootScope.phoneOpacity = 0;
+  $rootScope.scrollPercent = 0;
+
+  $rootScope.hideOpacity = 0;
+  $rootScope.noPainNoGain = 0;
+
+  setTimeout(function () {
+
+    jQuery('html body').bind('scroll', function () {
+
+      var scroll = this.scrollLeft();
+      console.log(scroll);
+    });
+
+    $(function () {
+      $("html body").mousewheel(function (event, delta) {
+        // console.log(event.deltaX, event.deltaY, event.deltaFactor);
+        if ($rootScope.Scroll <= 1000 && $rootScope.Scroll >= 0) {
+          $rootScope.Scroll -= delta * 0.6;
+        } else if ($rootScope.Scroll > 1000 && delta > 0) {
+          $rootScope.Scroll -= delta * 0.6;
+        } else if ($rootScope.Scroll < 0 && delta < 0) {
+          $rootScope.Scroll -= delta * 0.6;
+        } else {
+          return false;
+        }
+
+        $rootScope.phoneOpacity = $rootScope.Scroll / 1000;
+        $rootScope.invertedOpacity = 1 - $rootScope.Scroll / 1000;
+
+        $rootScope.scrollPercent = $rootScope.Scroll / 10;
+        if ($rootScope.scrollPercent < 0) {
+          $rootScope.scrollPercent = 0;
+        }
+
+        $rootScope.hideOpacity = $rootScope.Scroll / 10;
+        $rootScope.rotatePhone = $rootScope.Scroll * 100 / 360;
+        if ($rootScope.rotatePhone < 0) {
+          $rootScope.rotatePhone = 0;
+          $rootScope.movePhone = 0;
+          $rootScope.movePhoneLeft = 0;
+        }
+        $rootScope.movePhone = $rootScope.Scroll * 1.5 / 360;
+        $rootScope.movePhoneLeft = $rootScope.Scroll * 5 / 360;
+
+        $rootScope.noPainNoGain;
+        var noPainNoGain_0 = $rootScope.Scroll;
+        if (noPainNoGain_0 < 200) {
+          $rootScope.noPainNoGain = 0;
+        } else if (noPainNoGain_0 >= 200) {
+          $rootScope.noPainNoGain = (noPainNoGain_0 - 200) * 0.3;
+        }
+
+        $rootScope.transformedToPerf;
+        var transformedToPerf = $rootScope.Scroll;
+        if (transformedToPerf < 500) {
+          $rootScope.transformedToPerf = 0;
+        } else if (transformedToPerf >= 500) {
+          $rootScope.transformedToPerf = (transformedToPerf - 500) * 0.3;
+          console.log($rootScope.transformedToPerf);
+        }
+
+        $rootScope.intimatePleasure;
+        var intimatePleasure = $rootScope.Scroll;
+        if (intimatePleasure < 800) {
+          $rootScope.intimatePleasure = 0;
+        } else if (intimatePleasure >= 800) {
+          $rootScope.intimatePleasure = (intimatePleasure - 800) * 0.3;
+          console.log($rootScope.intimatePleasure);
+        }
+
+        // console.log($rootScope.Scroll);
+        // console.log(delta);
+        $scope.$apply();
+        event.preventDefault();
+      });
+    });
+  }, 600);
+});
 
 },{}],3:[function(require,module,exports){
 "use strict";
@@ -1624,6 +1705,245 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 },{}],6:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+/*!
+ * jQuery Mousewheel 3.1.13
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license
+ * http://jquery.org/license
+ */
+
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+})(function ($) {
+
+    var toFix = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
+        toBind = 'onwheel' in document || document.documentMode >= 9 ? ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
+        slice = Array.prototype.slice,
+        nullLowestDeltaTimeout,
+        lowestDelta;
+
+    if ($.event.fixHooks) {
+        for (var i = toFix.length; i;) {
+            $.event.fixHooks[toFix[--i]] = $.event.mouseHooks;
+        }
+    }
+
+    var special = $.event.special.mousewheel = {
+        version: '3.1.12',
+
+        setup: function setup() {
+            if (this.addEventListener) {
+                for (var i = toBind.length; i;) {
+                    this.addEventListener(toBind[--i], handler, false);
+                }
+            } else {
+                this.onmousewheel = handler;
+            }
+            // Store the line height and page height for this particular element
+            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+        },
+
+        teardown: function teardown() {
+            if (this.removeEventListener) {
+                for (var i = toBind.length; i;) {
+                    this.removeEventListener(toBind[--i], handler, false);
+                }
+            } else {
+                this.onmousewheel = null;
+            }
+            // Clean up the data we added to the element
+            $.removeData(this, 'mousewheel-line-height');
+            $.removeData(this, 'mousewheel-page-height');
+        },
+
+        getLineHeight: function getLineHeight(elem) {
+            var $elem = $(elem),
+                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
+            if (!$parent.length) {
+                $parent = $('body');
+            }
+            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+        },
+
+        getPageHeight: function getPageHeight(elem) {
+            return $(elem).height();
+        },
+
+        settings: {
+            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
+            normalizeOffset: true // calls getBoundingClientRect for each event
+        }
+    };
+
+    $.fn.extend({
+        mousewheel: function mousewheel(fn) {
+            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+        },
+
+        unmousewheel: function unmousewheel(fn) {
+            return this.unbind('mousewheel', fn);
+        }
+    });
+
+    function handler(event) {
+        var orgEvent = event || window.event,
+            args = slice.call(arguments, 1),
+            delta = 0,
+            deltaX = 0,
+            deltaY = 0,
+            absDelta = 0,
+            offsetX = 0,
+            offsetY = 0;
+        event = $.event.fix(orgEvent);
+        event.type = 'mousewheel';
+
+        // Old school scrollwheel delta
+        if ('detail' in orgEvent) {
+            deltaY = orgEvent.detail * -1;
+        }
+        if ('wheelDelta' in orgEvent) {
+            deltaY = orgEvent.wheelDelta;
+        }
+        if ('wheelDeltaY' in orgEvent) {
+            deltaY = orgEvent.wheelDeltaY;
+        }
+        if ('wheelDeltaX' in orgEvent) {
+            deltaX = orgEvent.wheelDeltaX * -1;
+        }
+
+        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
+        if ('axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS) {
+            deltaX = deltaY * -1;
+            deltaY = 0;
+        }
+
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        delta = deltaY === 0 ? deltaX : deltaY;
+
+        // New school wheel delta (wheel event)
+        if ('deltaY' in orgEvent) {
+            deltaY = orgEvent.deltaY * -1;
+            delta = deltaY;
+        }
+        if ('deltaX' in orgEvent) {
+            deltaX = orgEvent.deltaX;
+            if (deltaY === 0) {
+                delta = deltaX * -1;
+            }
+        }
+
+        // No change actually happened, no reason to go any further
+        if (deltaY === 0 && deltaX === 0) {
+            return;
+        }
+
+        // Need to convert lines and pages to pixels if we aren't already in pixels
+        // There are three delta modes:
+        //   * deltaMode 0 is by pixels, nothing to do
+        //   * deltaMode 1 is by lines
+        //   * deltaMode 2 is by pages
+        if (orgEvent.deltaMode === 1) {
+            var lineHeight = $.data(this, 'mousewheel-line-height');
+            delta *= lineHeight;
+            deltaY *= lineHeight;
+            deltaX *= lineHeight;
+        } else if (orgEvent.deltaMode === 2) {
+            var pageHeight = $.data(this, 'mousewheel-page-height');
+            delta *= pageHeight;
+            deltaY *= pageHeight;
+            deltaX *= pageHeight;
+        }
+
+        // Store lowest absolute delta to normalize the delta values
+        absDelta = Math.max(Math.abs(deltaY), Math.abs(deltaX));
+
+        if (!lowestDelta || absDelta < lowestDelta) {
+            lowestDelta = absDelta;
+
+            // Adjust older deltas if necessary
+            if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
+                lowestDelta /= 40;
+            }
+        }
+
+        // Adjust older deltas if necessary
+        if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
+            // Divide all the things by 40!
+            delta /= 40;
+            deltaX /= 40;
+            deltaY /= 40;
+        }
+
+        // Get a whole, normalized value for the deltas
+        delta = Math[delta >= 1 ? 'floor' : 'ceil'](delta / lowestDelta);
+        deltaX = Math[deltaX >= 1 ? 'floor' : 'ceil'](deltaX / lowestDelta);
+        deltaY = Math[deltaY >= 1 ? 'floor' : 'ceil'](deltaY / lowestDelta);
+
+        // Normalise offsetX and offsetY properties
+        if (special.settings.normalizeOffset && this.getBoundingClientRect) {
+            var boundingRect = this.getBoundingClientRect();
+            offsetX = event.clientX - boundingRect.left;
+            offsetY = event.clientY - boundingRect.top;
+        }
+
+        // Add information to the event object
+        event.deltaX = deltaX;
+        event.deltaY = deltaY;
+        event.deltaFactor = lowestDelta;
+        event.offsetX = offsetX;
+        event.offsetY = offsetY;
+        // Go ahead and set deltaMode to 0 since we converted to pixels
+        // Although this is a little odd since we overwrite the deltaX/Y
+        // properties with normalized deltas.
+        event.deltaMode = 0;
+
+        // Add event and delta to the front of the arguments
+        args.unshift(event, delta, deltaX, deltaY);
+
+        // Clearout lowestDelta after sometime to better
+        // handle multiple device types that give different
+        // a different lowestDelta
+        // Ex: trackpad = 3 and mouse wheel = 120
+        if (nullLowestDeltaTimeout) {
+            clearTimeout(nullLowestDeltaTimeout);
+        }
+        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+
+        return ($.event.dispatch || $.event.handle).apply(this, args);
+    }
+
+    function nullLowestDelta() {
+        lowestDelta = null;
+    }
+
+    function shouldAdjustOldDeltas(orgEvent, absDelta) {
+        // If this is an older event and the delta is divisable by 120,
+        // then we are assuming that the browser is treating this as an
+        // older mouse wheel event and that we should divide the deltas
+        // by 40 to try and get a more usable deltaFactor.
+        // Side note, this actually impacts the reported scroll distance
+        // in older browsers and can cause scrolling to be slower than native.
+        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+    }
+});
+
+},{}],7:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -5771,11 +6091,11 @@ angular.module('ngAnimate', [])
 
 })(window, window.angular);
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 require('./angular-animate');
 module.exports = 'ngAnimate';
 
-},{"./angular-animate":6}],8:[function(require,module,exports){
+},{"./angular-animate":7}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -6635,11 +6955,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":8}],10:[function(require,module,exports){
+},{"./angular-resource":9}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7706,11 +8026,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":10}],12:[function(require,module,exports){
+},{"./angular-route":11}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -39184,11 +39504,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":12}],14:[function(require,module,exports){
+},{"./angular":13}],15:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -39314,9 +39634,9 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],15:[function(require,module,exports){
-
 },{}],16:[function(require,module,exports){
+
+},{}],17:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -39428,7 +39748,7 @@ exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"buffer":17}],17:[function(require,module,exports){
+},{"buffer":18}],18:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -40980,7 +41300,7 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":14,"ieee754":22,"isarray":25}],18:[function(require,module,exports){
+},{"base64-js":15,"ieee754":23,"isarray":26}],19:[function(require,module,exports){
 module.exports = {
   "100": "Continue",
   "101": "Switching Protocols",
@@ -41045,7 +41365,7 @@ module.exports = {
   "511": "Network Authentication Required"
 }
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -41156,7 +41476,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":24}],20:[function(require,module,exports){
+},{"../../is-buffer/index.js":25}],21:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -41460,7 +41780,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var http = require('http');
 
 var https = module.exports;
@@ -41476,7 +41796,7 @@ https.request = function (params, cb) {
     return http.request.call(this, params, cb);
 }
 
-},{"http":43}],22:[function(require,module,exports){
+},{"http":44}],23:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -41562,7 +41882,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -41587,7 +41907,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Determine if an object is Buffer
  *
@@ -41606,14 +41926,14 @@ module.exports = function (obj) {
     ))
 }
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.0.0
  * https://jquery.com/
@@ -51652,7 +51972,7 @@ if ( !noGlobal ) {
 return jQuery;
 } ) );
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -52453,7 +52773,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./cache":28,"./documents":29,"./experiments":30,"./predicates":33,"./requests":35}],28:[function(require,module,exports){
+},{"./cache":29,"./documents":30,"./experiments":31,"./predicates":34,"./requests":36}],29:[function(require,module,exports){
 
 "use strict";
 
@@ -52508,7 +52828,7 @@ ApiCache.prototype = {
 
 module.exports = ApiCache;
 
-},{"./lru":32}],29:[function(require,module,exports){
+},{"./lru":33}],30:[function(require,module,exports){
 "use strict";
 
 /**
@@ -53094,7 +53414,7 @@ module.exports = {
   GroupDoc: GroupDoc
 };
 
-},{"./fragments":31}],30:[function(require,module,exports){
+},{"./fragments":32}],31:[function(require,module,exports){
 
 "use strict";
 
@@ -53179,7 +53499,7 @@ module.exports = {
   Variation: Variation
 };
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 
 var documents = require('./documents');
@@ -54433,7 +54753,7 @@ module.exports = {
   insertSpans: insertSpans
 };
 
-},{"./documents":29}],32:[function(require,module,exports){
+},{"./documents":30}],33:[function(require,module,exports){
 
 /**
  * A doubly linked list-based Least Recently Used (LRU) cache. Will keep most
@@ -54686,7 +55006,7 @@ LRUCache.prototype.toString = function() {
 
 module.exports = LRUCache;
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
 "use strict";
 
@@ -54968,7 +55288,7 @@ module.exports = {
 
 };
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 
 var experiments = require('./experiments'),
@@ -55046,7 +55366,7 @@ module.exports = {
 
 module.exports.Prismic = module.exports; // Backward compatibility
 
-},{"./api":27,"./documents":29,"./experiments":30,"./fragments":31,"./predicates":33}],35:[function(require,module,exports){
+},{"./api":28,"./documents":30,"./experiments":31,"./fragments":32,"./predicates":34}],36:[function(require,module,exports){
 (function (process){
 
 "use strict";
@@ -55287,7 +55607,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"../package.json":36,"_process":38,"http":43,"https":21,"url":55}],36:[function(require,module,exports){
+},{"../package.json":37,"_process":39,"http":44,"https":22,"url":56}],37:[function(require,module,exports){
 module.exports={
   "name": "prismic.io",
   "description": "JavaScript development kit for prismic.io",
@@ -55378,7 +55698,7 @@ module.exports={
   "readme": "ERROR: No README data found!"
 }
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -55425,7 +55745,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 }
 
 }).call(this,require('_process'))
-},{"_process":38}],38:[function(require,module,exports){
+},{"_process":39}],39:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -55546,7 +55866,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -56083,7 +56403,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -56169,7 +56489,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -56256,13 +56576,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":40,"./encode":41}],43:[function(require,module,exports){
+},{"./decode":41,"./encode":42}],44:[function(require,module,exports){
 (function (global){
 var ClientRequest = require('./lib/request')
 var extend = require('xtend')
@@ -56344,7 +56664,7 @@ http.METHODS = [
 	'UNSUBSCRIBE'
 ]
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/request":45,"builtin-status-codes":18,"url":55,"xtend":58}],44:[function(require,module,exports){
+},{"./lib/request":46,"builtin-status-codes":19,"url":56,"xtend":59}],45:[function(require,module,exports){
 (function (global){
 exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableByteStream)
 
@@ -56388,7 +56708,7 @@ function isFunction (value) {
 xhr = null // Help gc
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -56669,7 +56989,7 @@ var unsafeHeaders = [
 ]
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":44,"./response":46,"_process":38,"buffer":17,"inherits":23,"readable-stream":52,"to-arraybuffer":54}],46:[function(require,module,exports){
+},{"./capability":45,"./response":47,"_process":39,"buffer":18,"inherits":24,"readable-stream":53,"to-arraybuffer":55}],47:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -56853,7 +57173,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":44,"_process":38,"buffer":17,"inherits":23,"readable-stream":52}],47:[function(require,module,exports){
+},{"./capability":45,"_process":39,"buffer":18,"inherits":24,"readable-stream":53}],48:[function(require,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -56929,7 +57249,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":49,"./_stream_writable":51,"core-util-is":19,"inherits":23,"process-nextick-args":37}],48:[function(require,module,exports){
+},{"./_stream_readable":50,"./_stream_writable":52,"core-util-is":20,"inherits":24,"process-nextick-args":38}],49:[function(require,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -56956,7 +57276,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":50,"core-util-is":19,"inherits":23}],49:[function(require,module,exports){
+},{"./_stream_transform":51,"core-util-is":20,"inherits":24}],50:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -57852,7 +58172,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":47,"_process":38,"buffer":17,"buffer-shims":16,"core-util-is":19,"events":20,"inherits":23,"isarray":25,"process-nextick-args":37,"string_decoder/":53,"util":15}],50:[function(require,module,exports){
+},{"./_stream_duplex":48,"_process":39,"buffer":18,"buffer-shims":17,"core-util-is":20,"events":21,"inherits":24,"isarray":26,"process-nextick-args":38,"string_decoder/":54,"util":16}],51:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -58033,7 +58353,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":47,"core-util-is":19,"inherits":23}],51:[function(require,module,exports){
+},{"./_stream_duplex":48,"core-util-is":20,"inherits":24}],52:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -58562,7 +58882,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":47,"_process":38,"buffer":17,"buffer-shims":16,"core-util-is":19,"events":20,"inherits":23,"process-nextick-args":37,"util-deprecate":57}],52:[function(require,module,exports){
+},{"./_stream_duplex":48,"_process":39,"buffer":18,"buffer-shims":17,"core-util-is":20,"events":21,"inherits":24,"process-nextick-args":38,"util-deprecate":58}],53:[function(require,module,exports){
 (function (process){
 var Stream = (function (){
   try {
@@ -58582,7 +58902,7 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":47,"./lib/_stream_passthrough.js":48,"./lib/_stream_readable.js":49,"./lib/_stream_transform.js":50,"./lib/_stream_writable.js":51,"_process":38}],53:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":48,"./lib/_stream_passthrough.js":49,"./lib/_stream_readable.js":50,"./lib/_stream_transform.js":51,"./lib/_stream_writable.js":52,"_process":39}],54:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -58805,7 +59125,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":17}],54:[function(require,module,exports){
+},{"buffer":18}],55:[function(require,module,exports){
 var Buffer = require('buffer').Buffer
 
 module.exports = function (buf) {
@@ -58834,7 +59154,7 @@ module.exports = function (buf) {
 	}
 }
 
-},{"buffer":17}],55:[function(require,module,exports){
+},{"buffer":18}],56:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -59568,7 +59888,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":56,"punycode":39,"querystring":42}],56:[function(require,module,exports){
+},{"./util":57,"punycode":40,"querystring":43}],57:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -59586,7 +59906,7 @@ module.exports = {
   }
 };
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 (function (global){
 
 /**
@@ -59657,7 +59977,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;

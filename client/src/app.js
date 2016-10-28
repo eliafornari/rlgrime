@@ -238,7 +238,7 @@ jQuery($window).resize(function(){
 
 
 
-// var jquerymousewheel = require('./vendor/jquery.mousewheel.js')($);
+var jquerymousewheel = require('./vendor/jquery.mousewheel.js')($);
 var jqueryUI = require('./vendor/jquery-ui.min.js');
 var service = require("./service.js");
 var service = require("./home.js");

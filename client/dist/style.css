@@ -129,7 +129,6 @@ input, textarea, select, a, li {
   text-decoration: none; }
 
 a {
-  cursor: pointer;
   font-size: 25px;
   line-height: 30px;
   font-family: "Prata", serif;
@@ -137,7 +136,8 @@ a {
   /*  @if $media == large-desktop {
       @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
     }*/
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  cursor: pointer !important; }
   @media only screen and (min-width: 0px) and (max-width: 767px) {
     a {
       font-size: 20px;
@@ -184,11 +184,14 @@ h2 {
 
 /*.........................MAIN............................*/
 main {
-  width: 100vw;
+  height: 100vh;
+  width: 200vw;
   position: relative;
   display: block;
   list-style-type: none;
-  display: block; }
+  display: block;
+  overflow-x: scroll;
+  overflow-y: hidden; }
 
 .logo {
   position: fixed;
@@ -373,23 +376,35 @@ table {
   .home-block img {
     position: absolute; }
 
+.home-phonenumber {
+  position: fixed;
+  top: 45%;
+  left: 40%;
+  width: 40vw;
+  opacity: 0;
+  z-index: 999; }
+  .home-phonenumber a {
+    height: 100%;
+    display: block; }
+
 #left-top {
-  left: 50px;
-  height: 22vh;
-  width: 30vw; }
+  left: 0px;
+  height: 41vh;
+  width: 34vw; }
   #left-top #waiting {
     left: 0;
-    width: 50%; }
+    bottom: -1vh;
+    height: 100%; }
   #left-top #joys {
-    left: 40%;
+    right: 0%;
     height: 100%;
     width: auto; }
 
 #center-top {
-  left: 50%;
-  width: 22vw;
-  margin-left: -11vw;
-  height: 20vw; }
+  left: 37vw;
+  width: 33vw;
+  margin-left: 0;
+  height: 45vh; }
   #center-top #fed-up {
     width: 100%;
     display: block;
@@ -397,8 +412,10 @@ table {
     position: relative; }
 
 #right-top {
-  right: 25px;
-  width: 28vw; }
+  top: 3vh;
+  right: 0;
+  width: 34vw;
+  height: 45vh; }
   #right-top #eight-wonder {
     width: 100%; }
 
@@ -431,8 +448,9 @@ table {
     margin: auto; }
 
 #left-bottom {
-  left: 50px;
-  width: 50vw;
+  left: 0px;
+  width: 60vw;
+  height: 55vh;
   bottom: 0; }
   #left-bottom #star {
     width: 10%;
@@ -443,82 +461,63 @@ table {
     left: 0;
     top: 2vh; }
   #left-bottom #newnewnew {
-    width: 15vw;
+    width: 20vw;
     top: 0vh;
     left: 13vw; }
   #left-bottom #w8ingcom {
     width: 17vw;
-    top: 12vh;
-    left: 16vw;
-    transform: rotate(-10deg);
-    -ms-transform: rotate(-10deg);
-    /* IE 9 */
-    -webkit-transform: rotate(-10deg);
-    /* Safari */
-    transform-origin: 0 0; }
+    top: 11vh;
+    left: 19vw; }
   #left-bottom #pickyourpleasure {
-    width: 13vw;
-    right: 5vw;
-    top: 0; }
+    width: 18vw;
+    right: 7vw;
+    top: -7vh; }
   #left-bottom #phone {
-    width: 15vw;
-    top: 10vh;
-    right: -3vw; }
+    width: 18vw;
+    top: 5vh;
+    right: 5vw; }
   #left-bottom #nopainnogain {
-    width: 15vw;
-    bottom: 0;
+    width: 20vw;
+    bottom: 2vh;
     left: 0; }
   #left-bottom #transformedtoperfection {
-    width: 30vw;
-    right: 0;
-    bottom: 2vh; }
+    width: 37vw;
+    right: 3vw;
+    bottom: 4vh; }
 
 #center-bottom {
-  left: calc(50vw + 100px);
+  left: calc(60vw);
   bottom: 0;
-  width: 20vw; }
+  width: 20vw;
+  height: 55vh; }
   #center-bottom #topmarks {
-    top: 0;
-    left: -5vw;
-    width: 100%; }
+    top: -14vh;
+    left: -7vw;
+    width: 130%; }
   #center-bottom #superclimax {
-    top: 12vh;
-    width: 90%;
-    left: 0; }
+    top: 8vh;
+    width: 106%;
+    left: -2vw; }
   #center-bottom #intimatepleasure {
-    bottom: 0;
-    left: -2vw;
-    width: 100%; }
+    bottom: 5vh;
+    left: -4vw;
+    width: 109%; }
 
 #right-bottom {
   bottom: 0;
-  right: 25px;
-  width: 20vw;
-  height: 40vh; }
+  right: 8px;
+  width: 22vw;
+  height: 55vh; }
   #right-bottom #w8ingcom_right {
-    width: 100%;
-    top: 0; }
+    width: 90%;
+    top: -5vh;
+    right: 0;
+    transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    /* IE 9 */
+    -webkit-transform: rotate(10deg);
+    /* Safari */
+    transform-origin: 0 0; }
   #right-bottom #callgirl {
     width: 100%;
-    bottom: 2vh; }
-
-.shoot {
-  position: relative;
-  margin: 0;
-  display: block;
-  width: 100vw; }
-
-.shoot-collection {
-  width: 100%; }
-  .shoot-collection .shoot-collection-ul {
-    display: block;
-    width: 100%;
-    margin: auto; }
-    .shoot-collection .shoot-collection-ul .shoot-collection-li {
-      display: block;
-      clear: both;
-      width: 100%; }
-      .shoot-collection .shoot-collection-ul .shoot-collection-li .shoot-collection-img {
-        display: block;
-        width: 100%;
-        margin: auto; }
+    bottom: 7vh; }
